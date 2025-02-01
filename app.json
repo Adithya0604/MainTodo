@@ -9,11 +9,12 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.adithyasharma234.MainTodo"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/photo.png",
+        "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.adithyasharma234.MainTodo"

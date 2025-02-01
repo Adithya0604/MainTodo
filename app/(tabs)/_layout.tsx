@@ -1,7 +1,6 @@
 import { Tabs } from "expo-router";
 import React from "react";
 import { Platform } from "react-native";
-
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
@@ -31,7 +30,7 @@ export default function TabLayout() {
         options={{
           title: "Tasks",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="format-list-checks" color={color} />
+            <IconSymbol size={28} name="checkmark.circle" color={color} />
           ),
         }}
       />
@@ -40,7 +39,7 @@ export default function TabLayout() {
         options={{
           title: "Completed",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="check-circle" color={color} />
+            <IconSymbol size={28} name="checkmark.circle" color={color} />
           ),
         }}
       />

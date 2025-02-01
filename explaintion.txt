@@ -1,0 +1,434 @@
+Directory structure:
+└── adithya0604-maintodo/
+    ├── README.md
+    ├── app.json
+    ├── eas.json
+    ├── package.json
+    ├── tsconfig.json
+    ├── app/
+    │   ├── +not-found.tsx
+    │   ├── index.tsx
+    │   ├── (tabs)/
+    │   │   └── _layout.tsx
+    │   └── src/
+    │       ├── components/
+    │       │   ├── AddTaskModal.jsx
+    │       │   ├── SearchBar.jsx
+    │       │   └── TaskItem.jsx
+    │       ├── navigation/
+    │       │   └── AppNavigator.js
+    │       ├── redux/
+    │       │   ├── store.js
+    │       │   └── taskSlice.js
+    │       ├── screens/
+    │       │   ├── CompletedTasksScreen.jsx
+    │       │   └── TodoListScreen.jsx
+    │       └── utils/
+    │           ├── dateUtils.js
+    │           └── storage.js
+    ├── assets/
+    │   ├── fonts/
+    │   │   └── SpaceMono-Regular.ttf
+    │   └── images/
+    ├── components/
+    │   ├── Collapsible.tsx
+    │   ├── ExternalLink.tsx
+    │   ├── HapticTab.tsx
+    │   ├── HelloWave.tsx
+    │   ├── ParallaxScrollView.tsx
+    │   ├── ThemedText.tsx
+    │   ├── ThemedView.tsx
+    │   ├── __tests__/
+    │   │   ├── ThemedText-test.tsx
+    │   │   └── __snapshots__/
+    │   │       └── ThemedText-test.tsx.snap
+    │   └── ui/
+    │       ├── IconSymbol.ios.tsx
+    │       ├── IconSymbol.tsx
+    │       ├── TabBarBackground.ios.tsx
+    │       └── TabBarBackground.tsx
+    ├── constants/
+    │   └── Colors.ts
+    ├── hooks/
+    │   ├── useColorScheme.ts
+    │   ├── useColorScheme.web.ts
+    │   └── useThemeColor.ts
+    └── scripts/
+        └── reset-project.js
+
+
+* app/(tabs)/_layout
+--> So, when the intial state of the screen appers the user will tap on any tab button like (Tasks, Completed) it will then have [some vibrations] --> [Activation of the tab] --> [Load all the tasks of the tab] --> [Disply it to the user].
+
+* components/
+    ├── AddTaskModal.jsx
+    ├── SearchBar.jsx
+    └── TaskItem.jsx
+    
+    [User Clicks "Add Task"] --> [Modal Opens]  --> [Input Task Name] --> [Set Due Date Button] --> [Date Picker Popup] --> [Cancel/Submit] --> [Button Row]         
+    [Search Bar]                  -->    [Redux Action Dispatched]
+    [Magnifying Glass Icon]     
+    [Text Input Field]          
+    [X Icon (Clear)]            
+    +---------------------------------------+
+    | Task Card                             |
+    | [Checkbox] [Task Name & Due Date] [⋮]|
+    +---------------------------------------+
+    |                |  
+    v                v  
+    +-------------+  +-------------+  
+    | Toggle      |  | Menu Opens  |  
+    | Completion  |  +-------------+  
+    | (Redux)     |         |  
+    +-------------+         v  
+                  +-------------+
+                  | Edit/Delete |  
+                  | (Redux)     |  
+                  +-------------+
+
+
+AppNavigator.js 
+    --> 
+   +-------------------------------+     
+   |         Tab Bar               |
+   | [Tasks]      [Completed]      |
+   +-------------------------------+
+          |              |
+          v              v
+   +-------------+  +-------------+
+   | Todo List   |  | Completed   |
+   | Screen      |  | Tasks Screen|
+   +-------------+  +-------------+
+
+   +----------------+     +-----------------+
+   | AppNavigator   |     | TodoListScreen  |
+   | (Tab Nav)      |<--->| & Completed     |
+   +----------------+     +-----------------+
+          ▲
+          |
+   +-----------------+
+   | TaskItem/Modal  | (Child components)
+   +-----------------+
+
+
++not_found.tsx --> is the file based routhing system which is used in expo for handling the invaliud pages error's like 404-not found. which is been used in many frameworks. automaticaly
+
+
+Storage :- 
+      Async vs Sync
+            Sync (Synchronous): Operations are executed sequentially, blocking the program until the current task is finished.
+            Async (Asynchronous): Operations run independently, allowing the program to continue executing without waiting for the current task to finish.
+      [AsyncStorage vs LocalStorage]
+            AsyncStorage: Asynchronous storage in React Native, supports storing data persistently.
+            LocalStorage: Synchronous storage in the browser for storing key-value pairs.
+      [Promises]
+            Represents a task that might complete in the future, allowing .then() for success and .catch() for failure.
+      [fetch()]
+            Asynchronous function to make network requests.
+      [setTimeout() / setInterval()]
+            setTimeout: Delays execution of a task.
+            setInterval: Repeatedly executes a task at fixed intervals.
+      [async / await]
+            async: Defines an asynchronous function that implicitly returns a promise.
+            await: Pauses the execution of the function until the promise is resolved.
+      [Promise.all]
+            Waits for all promises to resolve before proceeding.
+      [Promise.race]
+            Resolves as soon as the first promise is resolved or rejected.
+      [Handling Async Operations]
+            await inside an async function to wait for promises to resolve.
+            Use then() and catch() to handle promise resolution or rejection.
+      [Why Async?]
+            Used for operations that may take time like network requests or database operations.
+            Ensures the UI remains responsive without blocking other code execution.
+
+* Hooks:- 
+    ## What are React Hooks?
+         React hooks are functions that let you use state and other React features without writing a class component. Hooks allow you to "hook into" React state and lifecycle features from function components.
+    ## Why Were Hooks Introduced?
+         Before hooks, React components could either be stateless or stateful:
+         Stateless components were just functions.
+         Stateful components were class-based.
+    
+    ## Who Can Use Hooks?
+         Hooks are available to all function components. You cannot use hooks in class components.
+    ## What Are the Different Types of Hooks?
+         There are two main types:
+         Built-in Hooks (React's core hooks)
+         Custom Hooks (Hooks you can create to share logic)
+
+      
+      ## Stateless components are like a basic cup of coffee that doesn’t change once it's served. Think of it as a simple process with no personal preferences or changes.
+         ## Example:
+            Imagine you’re in a coffee shop and you ask for a basic black coffee. You don’t need to customize it, you just want it the same every time. So the coffee shop (our component) will give you the coffee without asking for any customization. It's a stateless interaction – once you order, it’s straightforward, it doesn’t change unless you place a new order.
+            No customization (state) is required.
+            It doesn’t change, you always get the same thing.
+            It’s predictable and static.
+         ## Real-World Example:
+            A contact card for someone, where the information is fixed. It shows:
+            Name: "John Doe"
+            Phone Number: "123-456-7890"
+            Email: "john@example.com"
+      
+      ## Stateful Component (Coffee with Customization)
+          Now, let’s get to stateful components. These are like a coffee shop that allows you to customize your coffee based on preferences like:
+          Sugar: How many teaspoons?
+          Milk: Almond milk, whole milk, or none?
+          Flavor: Vanilla, caramel, or none?
+          Every time you visit, you can change your preferences, and the coffee shop will remember them. This is the stateful nature of a component. State allows the component to hold onto changes (like your customized coffee), and each interaction can modify the component's output.
+      ## Example:
+          Let’s say you order coffee with sugar today and no milk, but next time, you decide to try almond milk and caramel syrup. The coffee shop will remember what you ordered previously, so the next time you walk in, it knows your preferences.
+          In coding terms, the coffee order is the state, and the coffee shop (component) is responsible for keeping track of those preferences and showing the customized order.
+          Customizations (state) can change.
+          It’s dynamic and interactive.
+          Changes to preferences update the order.
+      ## Real-World Example:
+          A shopping cart in an online store is stateful. Let’s say you add some items:
+          Item A: 2 quantity
+          Item B: 1 quantity
+          Item C: 3 quantity
+          Now, the cart is stateful because it keeps track of what’s inside, and when you update it (like adding/removing items), the component updates to reflect those changes.
+      
+      ## Stateless in Code
+         import React from 'react';
+      
+         function Coffee() {
+           return (
+             <div>
+               <h1>Your Coffee: Black Coffee</h1>
+             </div>
+           );
+         }
+      
+      ## Stateful in Code
+         import React, { useState } from 'react';
+      
+         function CustomCoffee() {
+           const [sugar, setSugar] = useState(1); // Default 1 teaspoon of sugar
+           const [milk, setMilk] = useState("almond"); // Default milk type
+         
+           return (
+             <div>
+               <h1>Your Custom Coffee:</h1>
+               <p>Sugar: {sugar} teaspoons</p>
+               <p>Milk: {milk}</p>
+         
+               <button onClick={() => setSugar(sugar + 1)}>Add Sugar</button>
+               <button onClick={() => setMilk(milk === "almond" ? "whole" : "almond")}>Change Milk</button>
+             </div>
+           );
+         }
+
+* Component:-
+        What Are Components in React Native?
+                  Think of React Native Components as building blocks or Lego pieces of an app. Each piece of the app (like buttons, text, images, etc.) is a component. They can be simple or complex, depending on what the app needs.
+        Real-World Analogy:
+                  Imagine you’re building a house 🏠. Every room in the house is a component:
+                  The living room: A component that holds some furniture (like text and images).
+                  The kitchen: Another component that holds different items like a sink, stove, etc.
+                  The bathroom: A separate component with its own features.
+                  These rooms (components) come together to form a complete house (the app).
+        Types of Components in React Native
+        There are two main types of components in React Native:
+                  Functional Components – Simple, lightweight components without internal state or lifecycle methods.
+                  Class Components – More complex components with internal state and lifecycle methods (used less frequently now).
+        Who Uses Components?
+                  Everyone building an app in React Native! Whether you're building a simple task tracker or a huge social media app, components are the pieces that make up your user interface (UI). For example:
+                  Developers use components to build the app.
+                  Users see components on the screen (like buttons, text, and images).
+        How Do Components Work?
+                  Rendering: A component renders its content based on the input data.
+                  Props: Props are the information you pass to components, like data (e.g., user’s name, profile picture, etc.).
+                  State: State is the internal data that a component keeps track of and can change over time (e.g., toggling a switch or counting clicks).
+        Real-World Example: Coffee Shop (Components)
+                  Let’s relate components to the coffee shop 🏙️ again. Imagine the app is a coffee shop system, and each part of the system is a component.
+        Components in the Coffee Shop App:
+                  Order Button (Button Component): A button that users can click to place an order. It changes color when clicked.
+                  Coffee Menu (Text Component): A list of available coffee drinks.
+                  Coffee Cup (Image Component): An image of the coffee cup the user orders.
+                  Order Summary (View Component): The container that holds and arranges the order details (text, image).
+                  
+        Types of Components in Detail (with Examples)
+                  Functional Components: These are simpler components that don’t have internal state or lifecycle methods. They only focus on receiving props and rendering the UI.
+                  
+                         import React from 'react';
+                         import { Text } from 'react-native';
+                  
+                         const CoffeeMenu = ({ coffeeType }) => {
+                           return (
+                             <Text>{coffeeType} Coffee</Text> // Displays the coffee name passed via props
+                           );
+                         };
+                  
+                         export default CoffeeMenu;
+                  
+                  Class Components: These components are more complex and are often used when you need internal state or lifecycle methods (like componentDidMount for fetching data). Note: Most apps use functional components now, but you might encounter class components in legacy code.
+                  
+                         import React, { Component } from 'react';
+                         import { Button } from 'react-native';
+                         
+                         class OrderButton extends Component {
+                           constructor(props) {
+                             super(props);
+                             this.state = {
+                               ordered: false
+                             };
+                           }
+                         
+                           toggleOrder = () => {
+                             this.setState({ ordered: !this.state.ordered });
+                           };
+                         
+                           render() {
+                             return (
+                               <Button
+                                 title={this.state.ordered ? 'Cancel Order' : 'Place Order'}
+                                 onPress={this.toggleOrder}
+                               />
+                             );
+                           }
+                         }
+                         
+                         export default OrderButton;
+                  
+        Important Methods and Concepts Used in Components
+        Props (Properties):
+                  Definition: Props are like arguments passed to a component. They are read-only.
+                  Example: Passing the coffee name to the CoffeeMenu component.
+                  <CoffeeMenu coffeeType="Latte" />
+                  
+                  Props help pass data from one component to another, allowing components to communicate.
+        State:
+                  Definition: State is used to manage dynamic data that changes within a component (like toggling a button or tracking form inputs).
+                  Example: Tracking if the user has placed an order (ordered state in the OrderButton component).
+        Event Handling:
+                  React Native allows you to handle events like clicks or taps using functions.
+                  Example: When the user taps the Place Order button, we trigger the toggleOrder function to update the state.
+        Lifecycle Methods:
+                  Class Components use lifecycle methods like componentDidMount to execute code at specific times during a component’s life (before, during, or after rendering).
+                  Functional Components use Hooks (like useEffect) for similar purposes.
+                  
+                         useEffect(() => {
+                           console.log('Component Mounted');
+                         }, []);
+                  
+        When to Use Components in React Native?
+                  Use Functional Components when the component doesn’t need to manage its own state and is mostly used to render content.
+                  Use Class Components if you need lifecycle methods or more complex internal state (though you can usually achieve the same with functional components using hooks like useState and useEffect).
+                  Reusable Components: Components are great for reusability. Once you make a component like OrderButton, you can use it anywhere, and it will behave the same way.
+                  Component Composition: Combine simple components (like Button, Text, Image) into more complex components (like OrderButton or CoffeeMenu).
+                  
+        What Is a Component Lifecycle in React Native?
+                  The lifecycle of a component in React Native (and React in general) refers to the series of events that happen from when a component is first created (mounted) to when it is removed (unmounted) from the screen.
+                  In simple terms, it's like a day in the life of a component — starting from when it’s born, living its life, and then eventually dying when it’s no longer needed.
+                  
+        Real-World Analogy: A Plant’s Lifecycle 🌱
+                  Imagine you are growing a plant:
+                  Planting the seed (Mounting)
+                  Watering and taking care of it (Updating)
+                  The plant eventually dies (Unmounting)
+                  In the same way, React Native components have different stages in their lifecycle:
+                  Mounting: The component is being created.
+                  Updating: The component is changing, maybe due to state or props changes.
+                  Unmounting: The component is removed from the screen.
+                  
+        React Native Lifecycle Phases
+                  In React Native, components (specifically class components) go through a series of phases. These phases are controlled by lifecycle methods.
+        Let's break them down:
+        1. Mounting Phase (Born, Initialization)
+                  This phase happens when the component is created and inserted into the UI.
+                  componentDidMount(): This method is called once immediately after the component has been mounted (rendered on the screen). It’s a great place for initial setup, like fetching data from an API or setting up event listeners.
+        Real-World Analogy: After planting the seed (component), you start watering it (fetch data or perform tasks).
+                  
+                          class Plant extends React.Component {
+                            componentDidMount() {
+                              console.log('The plant is planted and watered!');
+                            }
+                          
+                            render() {
+                              return <Text>The plant is growing...</Text>;
+                            }
+                          }
+                  
+        2. Updating Phase (Growth & Change)
+                  This phase happens when the component needs to update due to changes in state or props.
+                  shouldComponentUpdate(nextProps, nextState): This method is called before the component re-renders. It allows you to optimize performance by deciding whether the component should update or not. If it returns false, the component won’t update.
+        Real-World Analogy: You notice the plant isn’t growing well, so you decide whether to change the soil or not (based on its current state).
+                  componentDidUpdate(prevProps, prevState): This method is called after the component has updated. It’s a great place to perform tasks after a change, like making additional network requests or updating something in the UI.
+        Real-World Analogy: After noticing the plant’s growth, you water it more or take some action to help it grow better.
+                  
+                          class Plant extends React.Component {
+                            shouldComponentUpdate(nextProps, nextState) {
+                              return nextProps.waterLevel !== this.props.waterLevel;
+                            }
+                          
+                            componentDidUpdate(prevProps, prevState) {
+                              console.log('The plant’s water level was updated!');
+                            }
+                          
+                            render() {
+                              return <Text>Watering the plant...</Text>;
+                            }
+                          }
+                  
+        3. Unmounting Phase (The Plant Dies)
+                  This phase occurs when the component is removed from the UI.
+                  componentWillUnmount(): This method is called right before the component is removed from the screen. It’s the best place to clean up resources, like removing event listeners, clearing timers, or canceling network requests to avoid memory leaks.
+        Real-World Analogy: You remove the plant from the garden when it's no longer needed, and you make sure to pack it up properly (like cleaning and storing tools).
+                  
+                           class Plant extends React.Component {
+                             componentWillUnmount() {
+                               console.log('The plant is being removed.');
+                             }
+                           
+                             render() {
+                               return <Text>The plant is alive!</Text>;
+                             }
+                           }
+                  
+        Functional Components and Lifecycle (With Hooks)
+                  In modern React (and React Native), we typically use functional components with Hooks instead of class components. useEffect is the replacement for many lifecycle methods in functional components.
+                  useEffect (The Lifesaver in Functional Components)
+                  useEffect combines componentDidMount, componentDidUpdate, and componentWillUnmount in one hook.
+                  With an empty dependency array []: It runs once when the component mounts (like componentDidMount).
+                  With specific dependencies [prop, state]: It runs whenever those props or states change (like componentDidUpdate).
+                  With a cleanup function: It’s used for cleanup tasks, similar to componentWillUnmount.
+                  
+                           import React, { useState, useEffect } from 'react';
+                           import { Text } from 'react-native';
+                           
+                           const Plant = () => {
+                             const [waterLevel, setWaterLevel] = useState(0);
+                           
+                             useEffect(() => {
+                               console.log('The plant is planted and watered!');
+                           
+                               return () => {
+                                 console.log('Cleaning up the plant resources...');
+                               };
+                             }, []); // Empty array means this runs only once when the component mounts
+                           
+                             useEffect(() => {
+                               console.log('The plant’s water level has changed to', waterLevel);
+                             }, [waterLevel]); // Runs whenever waterLevel changes
+                           
+                             return <Text>The plant needs water!</Text>;
+                           };
+                           
+                           export default Plant;
+                  
+        In this case:
+                  The first useEffect is equivalent to componentDidMount and componentWillUnmount (initialization and cleanup).
+                  The second useEffect acts like componentDidUpdate — it runs whenever waterLevel changes.
+                  
+        When Does the Component Lifecycle Matter?
+                  API Calls: When you need to fetch data after a component has mounted (use componentDidMount or useEffect).
+                  Performance Optimization: Use shouldComponentUpdate or React.memo to prevent unnecessary re-renders.
+                  Cleanup: Use componentWillUnmount or the cleanup function in useEffect to free up resources (e.g., cancelling network requests, removing event listeners).
+
+
+
+State = A big notebook 📖 where you write down tasks.
+Action = A person 🏃‍♂️ who brings a request to add, delete, or modify tasks.
+Reducer = The worker 🛠️ who follows the action and updates the notebook.
+Store = The library 📚 where the notebook is stored for everyone to access.
