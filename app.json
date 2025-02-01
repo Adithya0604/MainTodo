@@ -13,9 +13,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/photo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.adithyasharma234.MainTodo"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +37,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "750b81bd-ec9f-4196-9094-fa737dff147f"
+      }
     }
   }
 }
