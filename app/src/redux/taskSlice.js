@@ -5,7 +5,7 @@ const taskSlice = createSlice({
   initialState: {
     tasks: [],
     searchQuery: "",
-    sortBy: "name", // 'name' | 'dueDate'
+    sortBy: "name",
   },
   reducers: {
     addTask: (state, action) => {

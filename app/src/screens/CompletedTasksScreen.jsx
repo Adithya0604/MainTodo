@@ -31,7 +31,7 @@ const CompletedTasksScreen = () => {
         renderItem={({ item }) => (
           <TaskItem
             task={item}
-            onEdit={() => {}} // Disable editing for completed tasks
+            onEdit={() => {}}
           />
         )}
         keyExtractor={(item) => item.id}
